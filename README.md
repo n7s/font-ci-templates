@@ -7,7 +7,8 @@ So far: Travis, Bitbucket, GitLab, GitHub Actions...
 When applicable rename .dot to . and drop at the root of your project folder.
 (Or in the expected workflow subfolder).  Adjust internal variables as necessary.
 
-There are surely ways to improve the toolchain installation phase, and make things faster with pre-build profiles (docker containers or similar), caching, etc.
-More on that later on.
+There are ways to improve the toolchain installation phase, and make things faster with pre-build profiles (docker containers or similar), caching, etc.
+
+See (docker howto)[containers/howto.txt].
 
 Enjoy.

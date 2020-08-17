@@ -1,0 +1,53 @@
+
+Vastly oversimplified Docker for smith howto:
+=============================================
+
+Put the Dockerfile into a new directory where you have
+
+Create the initial image from that new directoyr:
+   sudo docker image build -t smith .
+
+List images:
+    sudo docker images
+
+Create a container:
+    sudo docker container create smith:latest
+
+Log into the container and mount the current directory under /smith
+    sudo docker run --rm -it -v $HOME/wstechfonts:/smith smith:latest bash
+
+Run smith on your project:
+    cd /smith
+    cd font-foo
+    smith configure
+    smith build
+    smith alltests
+    smith zip tarball
+
+
+How to use the smith Dockerfile in your GitLab image registry
+==============================================================
+# See details on https://gitlab.com/help/user/packages/container_registry/index
+# probably needs to be happening at the group level rather than at project level. 
+
+docker login registry.gitlab.com
+
+docker build -t registry.gitlab.com/username/smith .
+
+docker build -t registry.gitlab.com/username/smith .
+
+Adjust your workflow file to refer to the new image/container and add an update step:
+
+"
+image: "registry.gitlab.com/foo/font-foo:latest"
+
+build:
+  stage: build
+  before_script:
+    - apt update -y 
+    - apt upgrade -y 
+
+
+TODO: 
+devise a freeze process with two workflow files (and two different docker images?) or a conditional. 
+
