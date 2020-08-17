@@ -1,33 +1,32 @@
-# You can freely (re)use this GitLab template to enable CI (Continuous Integration) for your own open font project.
-# Your project needs to make use of smith. See https://github.com/silnrsi/smith
-# For documentation on the recommended steps see Font Development Best Practises at http://silnrsi.github.io/FDBP
-# and the SIL Font Development Notes at https://silnrsi.github.io/silfontdev
-# More details in the GitLab documentation at https://docs.gitlab.com/ce/ci/README.html
-# Enjoy and let us know if you find issues. 
+# You can freely (re)use this gitlab template to enable CI (Continuous Integration) for your own project.
+# Your projects needs to make use of smith. See https://github.com/silnrsi/smith
+# Documentation on the steps needed to use this will be available soon at http://silnrsi.github.io/FDBP
+# More details on the gitlab documentation: https://docs.gitlab.com/ce/ci/README.html
 
-image: "ubuntu:bionic"
+image: "ubuntu:18.04"
 
 build:
   stage: build
   before_script:
+    - export DEBIAN_FRONTEND=noninteractive
     - apt-get update -q -y
-    - apt-get install -q -y python3-software-properties libterm-readline-gnu-perl
+    - apt-get install -q -y software-properties-common 
     - add-apt-repository -y ppa:silnrsi/smith-py3
+    #- add-apt-repository -y ppa:fontforge/fontforge
     - add-apt-repository -y ppa:jonathonf/texlive-2019
     - add-apt-repository -y ppa:git-core/ppa
-    - apt-get update -q -y 
-    - apt-get install libjson-perl libtext-csv-perl libharfbuzz-bin -y
+    - add-apt-repository -y ppa:sile-typesetter/sile
+    - apt-get update -y 
     - apt-get install smith-font -y --no-install-recommends
+
 
   script:
     - smith configure
     - smith build
     - smith alltests
-    - smith pyfontaine
-    - smith fontlint
     - smith zip
     - smith tarball
-    - smith release 
+    - smith release
 
   artifacts:
     name: "${CI_PROJECT_NAME}-${CI_COMMIT_REF_NAME}${CI_COMMIT_SHA:0:8}-build${CI_JOB_ID}"
