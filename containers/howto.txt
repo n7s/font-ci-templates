@@ -2,7 +2,11 @@
 Vastly oversimplified Docker for smith howto:
 =============================================
 
-Put the Dockerfile into a new directory where you have
+Put the Dockerfile into a new directory where you have the rest of your files.
+
+BTW there is a better Dockerfile in the smith upstream repository:
+https://github.com/silnrsi/smith/blob/master/Dockerfile
+
 
 Create the initial image from that new directoyr:
    sudo docker image build -t smith .
